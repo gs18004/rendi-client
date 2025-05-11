@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
-interface ErrorProps {
+type ErrorProps = {
   error: Error;
   resetErrorBoundary: () => void;
   fullScreen?: boolean;
-}
+};
 
 export default function Error({ resetErrorBoundary, fullScreen }: ErrorProps) {
   const navigate = useNavigate();
@@ -23,15 +23,15 @@ export default function Error({ resetErrorBoundary, fullScreen }: ErrorProps) {
         },
       )}>
       <p className="text-lg font-bold text-[#202020]">문제가 발생했어요.</p>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <button
           onClick={resetErrorBoundary}
-          className="flex w-20 cursor-pointer items-center justify-center rounded bg-[#e1f8f2] px-4 py-2 text-[#47a68a]">
+          className="flex w-20 cursor-pointer items-center justify-center rounded-lg bg-[#e1f8f2] px-4 py-2 text-[#47a68a]">
           재시도
         </button>
         <button
           onClick={goHome}
-          className="flex w-20 cursor-pointer items-center justify-center rounded bg-[#59D1AD] px-4 py-2 text-white">
+          className="flex w-20 cursor-pointer items-center justify-center rounded-lg bg-[#59D1AD] px-4 py-2 text-white">
           홈으로
         </button>
       </div>

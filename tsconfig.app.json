@@ -25,7 +25,8 @@
     "baseUrl": "src",
     "paths": {
       "~/*": ["*"]
-    }
+    },
+    "types": ["vite-plugin-pwa/react"]
   },
   "include": ["src"]
 }

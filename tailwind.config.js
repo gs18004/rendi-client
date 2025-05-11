@@ -3,20 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      animation: {
-        spin: 'spin 1s linear infinite',
+      boxShadow: {
+        google: '0px 0px 20px 0px rgba(0, 0, 0, 0.05)',
       },
-      keyframes: {
-        spin: {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' },
-        },
-      },
-    },
-    screens: {
-      sm: '640px',
-      md: '768px',
-      lg: '1280px',
     },
   },
   plugins: [],
