@@ -3,7 +3,7 @@ import { PATH } from './constants/path';
 import Root from './pages/Root/Root';
 import ErrorBoundaryWrapper from '~/ErrorBoundaryWrapper';
 import Login from '~/pages/Login/Login';
-import CollectInfo from '~/pages/CollectInfo/Collectinfo';
+import CollectInfo from '~/pages/CollectInfo/CollectInfo';
 import CollectInfoComplete from '~/pages/CollectInfoComplete/CollectinfoComplete';
 import SignUp from '~/pages/SignUp/SignUp';
 
