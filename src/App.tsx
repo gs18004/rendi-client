@@ -11,7 +11,7 @@ const RootLayout = () => {
   return (
     <ErrorBoundaryWrapper>
       <div className="min-h-dvh">
-        <div className="mx-auto h-dvh max-w-md shadow-lg">
+        <div className="mx-auto min-h-dvh max-w-md shadow-lg">
           <Outlet />
         </div>
       </div>
