@@ -46,7 +46,7 @@ export default function CollectMyInfo({ onComplete }: CollectMyInfoProps) {
   };
 
   return (
-    <div className="flex h-dvh w-full flex-col items-center justify-between px-4 py-8">
+    <div className="flex min-h-dvh w-full flex-col items-center justify-between gap-4 px-4 py-8">
       <div className="flex w-full flex-col items-center gap-9">
         <ProgressBar currentStep={currentStep} />
         <p className="text-center text-base font-semibold leading-tight text-black">
