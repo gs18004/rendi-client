@@ -5,7 +5,7 @@ import ErrorBoundaryWrapper from '~/ErrorBoundaryWrapper';
 import Login from '~/pages/Login/Login';
 import CollectInfo from '~/pages/CollectInfo/CollectInfo';
 import SignUp from '~/pages/SignUp/SignUp';
-import CollectInfoComplete from '~/pages/CollectInfoComplete/CollectInfoComplete1';
+import CollectInfoComplete from '~/pages/CollectInfoComplete/CollectInfoComplete';
 
 const RootLayout = () => {
   return (
