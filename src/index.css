@@ -161,3 +161,7 @@ button {
 button:disabled {
   cursor: not-allowed;
 }
+
+html {
+  background: #fafafa;
+}
