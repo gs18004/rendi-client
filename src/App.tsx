@@ -6,6 +6,7 @@ import Login from '~/pages/Login/Login';
 import CollectInfo from '~/pages/CollectInfo/CollectInfo';
 import SignUp from '~/pages/SignUp/SignUp';
 import CollectInfoComplete from '~/pages/CollectInfoComplete/CollectInfoComplete';
+import GoogleCallback from '~/pages/GoogleCallback/GoogleCallback';
 
 const RootLayout = () => {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route element={<RootLayout />}>
         <Route path={PATH.ROOT} element={<Root />} />
         <Route path={PATH.LOGIN} element={<Login />} />
+        <Route path={PATH.GOOGLE_CALLBACK} element={<GoogleCallback />} />
         <Route path={PATH.SIGN_UP} element={<SignUp />} />
         <Route path={PATH.COLLECT_INFO} element={<CollectInfo />} />
         <Route
