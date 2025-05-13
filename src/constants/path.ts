@@ -3,6 +3,8 @@ export const PATH = {
   ROOT: '/',
   // login
   LOGIN: '/login',
+  // google callback
+  GOOGLE_CALLBACK: '/google/callback',
   // sign-up
   SIGN_UP: '/sign-up',
   // collect-info
