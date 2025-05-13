@@ -5,17 +5,17 @@ import type { paths } from '~/types/schema.d';
 import { http } from '~/utils/axios';
 
 type Response =
-  paths['/checklist']['get']['responses']['200']['content']['application/json'];
+  paths['/checklist/items']['get']['responses']['200']['content']['application/json'];
 
-async function getChecklist() {
+async function getChecklistItems() {
   const { data } = await http.get<Response>(END_POINT.CHECKLIST);
 
   return data;
 }
 
-export function checklistOptions() {
+export function checklistItemsOptions() {
   return queryOptions({
-    queryKey: CHECKLIST_QUERY_KEY.ALL,
-    queryFn: () => getChecklist(),
+    queryKey: CHECKLIST_QUERY_KEY.ITEMS(),
+    queryFn: () => getChecklistItems(),
   });
 }
