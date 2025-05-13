@@ -4,10 +4,10 @@ import bottomChatImg from '~/assets/svg/bottom-chat.svg';
 import { useDateTime } from '~/components/hooks/useDateTime';
 import Alert from '~/pages/LiveCoaching/components/Alert';
 import chatImg from '~/assets/img/chat.png';
-import megaPhoneImg from '~/assets/img/megaPhone.png';
-import fireImg from '~/assets/img/fire.png';
-import heartImg from '~/assets/img/heart2.png';
-import zoomImg from '~/assets/img/zoom.png';
+// import megaPhoneImg from '~/assets/img/megaPhone.png';
+// import fireImg from '~/assets/img/fire.png';
+// import heartImg from '~/assets/img/heart2.png';
+// import zoomImg from '~/assets/img/zoom.png';
 export default function LiveCoaching() {
   const dateTime = useDateTime();
 
