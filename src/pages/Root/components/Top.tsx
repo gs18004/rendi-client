@@ -13,7 +13,7 @@ export default function Top() {
   const [{ data: profile }, { data: schedules }] = useSuspenseQueries({
     queries: [profileOptions(), schedulesOptions()],
   });
-  const name = profile.name;
+  const name = profile.profile?.name;
   const date = schedules.meeting_date;
   const time = schedules.meeting_time;
   const place = schedules.meeting_place;
