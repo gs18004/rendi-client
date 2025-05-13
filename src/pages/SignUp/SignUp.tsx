@@ -5,6 +5,7 @@ import Button from '~/components/common/Button';
 import Input from '~/components/common/Input';
 import Select from '~/components/common/Select';
 import { PATH } from '~/constants/path';
+import { usePostProfileMutation } from '~/pages/SignUp/hooks/usePostProfileMutation';
 
 const ageOptions = Array.from({ length: 21 }, (_, i) => ({
   value: String(i + 20),
@@ -68,10 +69,17 @@ export default function SignUp() {
   });
 
   const canMoveNext = answer[1] && answer[2] && answer[3] && answer[6];
-
+  const { mutate: postProfile } = usePostProfileMutation();
   const onComplete = () => {
     if (canMoveNext) {
-      // api 호출
+      postProfile({
+        name: answer[1],
+        age: Number(answer[2]),
+        gender: answer[3],
+        region: answer[4],
+        mbti: answer[5],
+        smoking: answer[6] === 'smoker',
+      });
       navigate(PATH.COLLECT_INFO);
     }
   };

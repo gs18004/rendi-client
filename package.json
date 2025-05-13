@@ -15,7 +15,8 @@
     "storybook": "storybook dev -p 6006",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint:fix": "eslint . --fix",
-    "generate-pwa-assets": "pwa-assets-generator"
+    "generate-pwa-assets": "pwa-assets-generator",
+    "gen:swagger": "npx openapi-typescript https://api.rendi.online/openapi.json --output ./src/types/schema.d.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
