@@ -6,7 +6,7 @@ import Login from '~/pages/Login/Login';
 import CollectInfo from '~/pages/CollectInfo/CollectInfo';
 import SignUp from '~/pages/SignUp/SignUp';
 import CollectInfoComplete from '~/pages/CollectInfoComplete/CollectInfoComplete';
-import GoogleCallback from '~/pages/GoogleCallback/GoogleCallback';
+import LiveCoaching from '~/pages/LiveCoaching/LiveCoaching';
 
 const RootLayout = () => {
   return (
@@ -19,19 +19,20 @@ const RootLayout = () => {
     </ErrorBoundaryWrapper>
   );
 };
+
 function App() {
   return (
     <Routes>
       <Route element={<RootLayout />}>
         <Route path={PATH.ROOT} element={<Root />} />
         <Route path={PATH.LOGIN} element={<Login />} />
-        <Route path={PATH.GOOGLE_CALLBACK} element={<GoogleCallback />} />
         <Route path={PATH.SIGN_UP} element={<SignUp />} />
         <Route path={PATH.COLLECT_INFO} element={<CollectInfo />} />
         <Route
           path={PATH.COLLECT_INFO_COMPLETE}
           element={<CollectInfoComplete />}
         />
+        <Route path={PATH.LIVE_COACHING} element={<LiveCoaching />} />
       </Route>
     </Routes>
   );

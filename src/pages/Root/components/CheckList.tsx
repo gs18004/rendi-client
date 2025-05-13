@@ -1,7 +1,9 @@
 import checkedImg from '~/assets/svg/checked.svg';
 import uncheckedImg from '~/assets/svg/unchecked.svg';
+import fileCheckImg from '~/assets/svg/file-check.svg';
 
 export default function CheckList() {
+  const notStarted = false;
   const checkList = [
     {
       id: 1,
@@ -24,18 +26,34 @@ export default function CheckList() {
       <div className="flex w-full items-center gap-2 px-5 py-3.5">
         <p className="text-base font-semibold text-[#343953]">Check list</p>
         <p className="text-[10px] font-light text-[#343953]">
-          두근두근 소개팅 전! 무엇을 챙겨볼까요?
+          {notStarted
+            ? '소개팅 전, 체크 리스트로 꼼꼼히 준비해요!'
+            : '두근두근 소개팅 전! 무엇을 챙겨볼까요?'}
         </p>
       </div>
       <div className="flex w-full flex-col gap-3 px-5 pb-3.5">
-        {checkList.map((item) => (
-          <div key={item.id} className="flex items-center gap-2.5">
-            <button>
-              <img src={item.checked ? checkedImg : uncheckedImg} alt="check" />
-            </button>
-            <p className="text-xs font-medium text-black">{item.title}</p>
+        {notStarted ? (
+          <div className="flex flex-col items-center gap-[15px] py-10">
+            <img src={fileCheckImg} alt="file-check" />
+            <p className="text-center text-sm font-semibold leading-tight text-[#2BCC9C]">
+              소개팅 일정을 등록하면
+              <br />
+              체크 리스트를 확인 할 수 있어요!
+            </p>
           </div>
-        ))}
+        ) : (
+          checkList.map((item) => (
+            <div key={item.id} className="flex items-center gap-2.5">
+              <button>
+                <img
+                  src={item.checked ? checkedImg : uncheckedImg}
+                  alt="check"
+                />
+              </button>
+              <p className="text-xs font-medium text-black">{item.title}</p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
