@@ -195,10 +195,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Get Essay(group_input) with answers */
+        get: operations["get_group_input_survey_essay_get"];
         put?: never;
-        /** Post Essay */
-        post: operations["post_essay_survey_essay_post"];
+        /** Post Essay(group_input) answers */
+        post: operations["post_group_input_survey_essay_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -212,7 +213,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Questions */
+        /** 파트너 설문 질문 조회 */
         get: operations["get_questions_partners_questions_get"];
         put?: never;
         post?: never;
@@ -229,67 +230,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** 내가 등록한 모든 파트너 조회 */
+        /** 파트너 조회 */
         get: operations["list_partners_partners_get"];
         put?: never;
-        /** Post Partner */
+        /** 새 파트너 등록 (최대 1개) */
         post: operations["post_partner_partners_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/partners/latest": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** 마지막 등록된 파트너 조회 */
-        get: operations["get_latest_partners_latest_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/partners/schedule": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * 마지막 파트너에 대한 소팅(날짜/시간/장소) 저장
-         * @description - 사용자가 마지막으로 등록한 파트너의
-         *       date/time/place를 업데이트합니다.
-         *     - 파트너를 하나도 등록하지 않았으면 404 반환.
-         */
-        post: operations["schedule_partner_partners_schedule_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dashboard": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Dashboard */
-        get: operations["get_dashboard_dashboard_get"];
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -303,8 +248,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** 체크리스트 항목 전체 조회 */
-        get: operations["list_items_checklist_items_get"];
+        /**
+         * 체크리스트 기본 항목 리스트 조회
+         * @description 체크리스트에 사용할 기본 항목 텍스트 목록을 반환합니다.
+         */
+        get: operations["list_default_items_checklist_items_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -320,11 +268,35 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** 특정 날짜(기본: 오늘)의 체크리스트 상태 조회 */
-        get: operations["get_today_checklist_checklist_get"];
+        /**
+         * 체크리스트 상태 조회
+         * @description 현재 사용자가 체크한 항목의 상태를 반환합니다.
+         */
+        get: operations["get_checklist_checklist_get"];
         put?: never;
-        /** 체크/해제 토글 */
+        /**
+         * 체크/해제 토글
+         * @description 특정 항목(item_id)에 대해 체크 또는 해제 상태를 업데이트합니다.
+         */
         post: operations["toggle_check_checklist_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/schedules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 최근 파트너 일정 조회 */
+        get: operations["get_schedule_schedules_get"];
+        put?: never;
+        /** 일정 등록 */
+        post: operations["set_schedule_schedules_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -335,13 +307,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** ActionOut */
-        ActionOut: {
-            /** Id */
-            id: string;
-            /** Title */
-            title: string;
-        };
         /** ChecklistItemOut */
         ChecklistItemOut: {
             /** Id */
@@ -349,39 +314,55 @@ export interface components {
             /** Text */
             text: string;
         };
-        /** ChoiceAnswerIn */
+        /**
+         * ChoiceAnswerIn
+         * @example {
+         *       "option_ids": [
+         *         "1",
+         *         "3",
+         *         "5"
+         *       ],
+         *       "question_id": 21
+         *     }
+         */
         ChoiceAnswerIn: {
-            /** Question Id */
+            /**
+             * Question Id
+             * @description QUESTION_DEFINITIONS 상의 id
+             */
             question_id: number;
-            /** Option Id */
-            option_id: string | null;
-            /** Option Ids */
-            option_ids: string[] | null;
+            /**
+             * Option Id
+             * @description 단일 선택 시
+             */
+            option_id?: string | null;
+            /**
+             * Option Ids
+             * @description 복수 선택 시
+             */
+            option_ids?: string[] | null;
         };
         /** ChoiceAnswerList */
         ChoiceAnswerList: {
             /** Answers */
             answers: components["schemas"]["ChoiceAnswerIn"][];
         };
-        /** DailyChecklistOut */
-        DailyChecklistOut: {
-            /**
-             * Date
-             * Format: date
-             */
-            date: string;
-            /** Items */
-            items: components["schemas"]["UserChecklistStatus"][];
+        /** GroupInputAnswerList */
+        GroupInputAnswerList: {
+            /** Answers */
+            answers: components["schemas"]["SubQuestionAnswerIn"][];
         };
-        /** DashboardOut */
-        DashboardOut: {
-            partner: components["schemas"]["PartnerOut"];
-            /** Countdown */
-            countdown: string;
-            /** Tasks */
-            tasks: components["schemas"]["TaskOut"][];
-            /** Actions */
-            actions: components["schemas"]["ActionOut"][];
+        /** GroupInputOut */
+        GroupInputOut: {
+            /**
+             * Question Id
+             * @default 34
+             * @constant
+             * @enum {integer}
+             */
+            question_id: 34;
+            /** Answers */
+            answers: components["schemas"]["SubQuestionOut"][];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -390,11 +371,6 @@ export interface components {
         };
         /** NewPartnerIn */
         NewPartnerIn: {
-            /**
-             * Meeting Date
-             * Format: date
-             */
-            meeting_date: string;
             /** Answers */
             answers: components["schemas"]["ChoiceAnswerIn"][];
         };
@@ -421,29 +397,11 @@ export interface components {
         PartnerOut: {
             /** Id */
             id: number;
-            /**
-             * Meeting Date
-             * Format: date
-             */
-            meeting_date: string;
-            /** Meeting Time */
-            meeting_time: string | null;
-            /** Meeting Place */
-            meeting_place: string | null;
         };
         /** PartnerWithAnswersOut */
         PartnerWithAnswersOut: {
             /** Id */
             id: number;
-            /**
-             * Meeting Date
-             * Format: date
-             */
-            meeting_date: string;
-            /** Meeting Time */
-            meeting_time: string | null;
-            /** Meeting Place */
-            meeting_place: string | null;
             /** Answers */
             answers: components["schemas"]["PartnerAnswerOut"][];
         };
@@ -515,21 +473,21 @@ export interface components {
             /** Title */
             title: string;
             /** Maxchoice */
-            maxChoice: number | null;
+            maxChoice?: number | null;
             /** Options */
-            options: components["schemas"]["OptionOut"][] | null;
-            /** Subquestions */
-            subQuestions: components["schemas"]["OptionOut"][] | null;
+            options?: components["schemas"]["OptionOut"][] | null;
             /** Minlabel */
-            minLabel: string | null;
+            minLabel?: string | null;
             /** Maxlabel */
-            maxLabel: string | null;
+            maxLabel?: string | null;
             /** Min */
-            min: number | null;
+            min?: number | null;
             /** Max */
-            max: number | null;
+            max?: number | null;
             /** Step */
-            step: number | null;
+            step?: number | null;
+            /** Subquestions */
+            subQuestions?: components["schemas"]["SubQuestionDef"][] | null;
         };
         /** QuestionWithAnswerOut */
         QuestionWithAnswerOut: {
@@ -540,23 +498,21 @@ export interface components {
             /** Title */
             title: string;
             /** Maxchoice */
-            maxChoice: number | null;
+            maxChoice?: number | null;
             /** Options */
-            options: components["schemas"]["OptionOut"][] | null;
-            /** Subquestions */
-            subQuestions: components["schemas"]["OptionOut"][] | null;
+            options?: components["schemas"]["OptionOut"][] | null;
             /** Minlabel */
-            minLabel: string | null;
+            minLabel?: string | null;
             /** Maxlabel */
-            maxLabel: string | null;
+            maxLabel?: string | null;
             /** Min */
-            min: number | null;
+            min?: number | null;
             /** Max */
-            max: number | null;
+            max?: number | null;
             /** Step */
-            step: number | null;
-            /** Answer Id */
-            answer_id?: string | null;
+            step?: number | null;
+            /** Subquestions */
+            subQuestions?: components["schemas"]["SubQuestionDef"][] | null;
             /** Answer Ids */
             answer_ids?: string[] | null;
             /** Text */
@@ -564,9 +520,15 @@ export interface components {
         };
         /** SaveResult */
         SaveResult: {
-            /** Status */
+            /**
+             * Status
+             * @example success
+             */
             status: string;
-            /** Saved Count */
+            /**
+             * Saved Count
+             * @example 3
+             */
             saved_count: number;
         };
         /** ScheduleIn */
@@ -584,21 +546,72 @@ export interface components {
             /** Meeting Place */
             meeting_place: string;
         };
-        /** TaskOut */
-        TaskOut: {
+        /** ScheduleOut */
+        ScheduleOut: {
+            /**
+             * Meeting Date
+             * Format: date
+             */
+            meeting_date: string;
+            /**
+             * Meeting Time
+             * Format: time
+             */
+            meeting_time: string;
+            /** Meeting Place */
+            meeting_place: string;
+        };
+        /**
+         * SubQuestionAnswerIn
+         * @example {
+         *       "sub_question_id": 2,
+         *       "text": "내 장점은 …"
+         *     }
+         */
+        SubQuestionAnswerIn: {
+            /**
+             * Sub Question Id
+             * @description 34번 질문 내 서브 id
+             */
+            sub_question_id: number;
+            /**
+             * Text
+             * @description 입력 텍스트
+             */
+            text?: string | null;
+        };
+        /**
+         * SubQuestionDef
+         * @description group_input(subQuestions) 정의
+         */
+        SubQuestionDef: {
             /** Id */
-            id: string;
-            /** When */
-            when: string;
+            id: number;
             /** Title */
             title: string;
+            /** Placeholder */
+            placeholder?: string | null;
+            /**
+             * Required
+             * @default false
+             */
+            required: boolean;
         };
-        /** TextAnswerIn */
-        TextAnswerIn: {
-            /** Question Id */
-            question_id: number;
+        /** SubQuestionOut */
+        SubQuestionOut: {
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** Placeholder */
+            placeholder?: string | null;
+            /**
+             * Required
+             * @default false
+             */
+            required: boolean;
             /** Text */
-            text: string;
+            text?: string | null;
         };
         /** ToggleChecklistIn */
         ToggleChecklistIn: {
@@ -1103,7 +1116,38 @@ export interface operations {
             };
         };
     };
-    post_essay_survey_essay_post: {
+    get_group_input_survey_essay_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupInputOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_group_input_survey_essay_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -1114,7 +1158,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TextAnswerIn"];
+                "application/json": components["schemas"]["GroupInputAnswerList"];
             };
         };
         responses: {
@@ -1235,104 +1279,7 @@ export interface operations {
             };
         };
     };
-    get_latest_partners_latest_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: {
-                access_token?: string;
-            };
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PartnerWithAnswersOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    schedule_partner_partners_schedule_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: {
-                access_token?: string;
-            };
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ScheduleIn"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PartnerOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_dashboard_dashboard_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: {
-                access_token?: string;
-            };
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DashboardOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_items_checklist_items_get: {
+    list_default_items_checklist_items_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -1352,11 +1299,9 @@ export interface operations {
             };
         };
     };
-    get_today_checklist_checklist_get: {
+    get_checklist_checklist_get: {
         parameters: {
-            query?: {
-                for_date?: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: {
@@ -1371,7 +1316,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DailyChecklistOut"];
+                    "application/json": components["schemas"]["UserChecklistStatus"][];
                 };
             };
             /** @description Validation Error */
@@ -1406,6 +1351,72 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_schedule_schedules_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScheduleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_schedule_schedules_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: {
+                access_token?: string;
+            };
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScheduleIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScheduleOut"];
+                };
             };
             /** @description Validation Error */
             422: {

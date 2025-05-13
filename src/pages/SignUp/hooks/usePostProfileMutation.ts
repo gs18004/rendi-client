@@ -24,7 +24,7 @@ export function usePostProfileMutation() {
 }
 
 async function postProfile(params: Params) {
-  const { data } = await http.put<Response>(END_POINT.PROFILE, params);
+  const { data } = await http.post<Response>(END_POINT.PROFILE, params);
 
   return data;
 }

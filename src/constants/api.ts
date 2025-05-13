@@ -8,4 +8,15 @@ export const END_POINT = {
     REFRESH: '/auth/refresh',
   },
   PROFILE: '/users/me/profile',
+  SURVEY: {
+    LIFESTYLE: '/survey/lifestyle',
+    IDENTIFY: '/survey/identify',
+    PREFERENCE: '/survey/preference',
+    BELIEFS: '/survey/beliefs',
+    ESSAY: '/survey/essay',
+  },
+  PARTNERS: '/partners',
+  DASHBOARD: '/dashboard',
+  SCHEDULES: '/schedules',
+  CHECKLIST: '/checklist',
 };

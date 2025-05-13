@@ -5,12 +5,18 @@ import { calculateDday } from '~/utils/date';
 import calendarIcon from '~/assets/svg/calendar.svg';
 import timeIcon from '~/assets/svg/time.svg';
 import locationIcon from '~/assets/svg/location.svg';
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { profileOptions } from '~/apis/profileOptions';
+import { schedulesOptions } from '~/apis/schedulesOptions';
 
 export default function Top() {
-  const name = '홍길동';
-  const date: string | null = '2025-05-14';
-  const time: string | null = '18:30';
-  const place: string | null = '소개팅 장소';
+  const [{ data: profile }, { data: schedules }] = useSuspenseQueries({
+    queries: [profileOptions(), schedulesOptions()],
+  });
+  const name = profile.name;
+  const date = schedules.meeting_date;
+  const time = schedules.meeting_time;
+  const place = schedules.meeting_place;
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="flex flex-col items-center gap-[17px]">

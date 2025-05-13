@@ -7,6 +7,7 @@ import CollectInfo from '~/pages/CollectInfo/CollectInfo';
 import SignUp from '~/pages/SignUp/SignUp';
 import CollectInfoComplete from '~/pages/CollectInfoComplete/CollectInfoComplete';
 import LiveCoaching from '~/pages/LiveCoaching/LiveCoaching';
+import ChatCoaching from '~/pages/ChatCoaching/ChatCoaching';
 
 const RootLayout = () => {
   return (
@@ -33,6 +34,7 @@ function App() {
           element={<CollectInfoComplete />}
         />
         <Route path={PATH.LIVE_COACHING} element={<LiveCoaching />} />
+        <Route path={PATH.CHAT_COACHING} element={<ChatCoaching />} />
       </Route>
     </Routes>
   );

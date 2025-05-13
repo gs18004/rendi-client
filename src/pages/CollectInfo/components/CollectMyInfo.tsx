@@ -16,6 +16,12 @@ import type {
   TQuestion,
   TSubAnswerMap,
 } from '~/pages/CollectInfo/types/collectInfo';
+import { usePostSurveyLifestyleMutation } from '~/pages/CollectInfo/hooks/usePostSurveyLifestyleMutation';
+import { usePostSurveyIdentifyMutation } from '~/pages/CollectInfo/hooks/usePostSurveyIdentifyMutation';
+import { usePostSurveyBeliefsMutation } from '~/pages/CollectInfo/hooks/usePostSurveyBeliefsMutation';
+import { usePostSurveyPreferenceMutation } from '~/pages/CollectInfo/hooks/usePostSurveyPreferenceMutation';
+import { usePostSurveyEssayMutation } from '~/pages/CollectInfo/hooks/usePostSurveyEssayMutation';
+import { isArray } from 'es-toolkit/compat';
 
 type CollectMyInfoProps = {
   onComplete: () => void;
@@ -34,12 +40,69 @@ export default function CollectMyInfo({ onComplete }: CollectMyInfoProps) {
   };
   const answer = answers[currentQuestion.id];
 
+  const { mutateAsync: postSurveyLifestyle } = usePostSurveyLifestyleMutation();
+  const { mutateAsync: postSurveyIdentify } = usePostSurveyIdentifyMutation();
+  const { mutateAsync: postSurveyPreference } =
+    usePostSurveyPreferenceMutation();
+  const { mutateAsync: postSurveyBeliefs } = usePostSurveyBeliefsMutation();
+  const { mutateAsync: postSurveyEssay } = usePostSurveyEssayMutation();
+
   const goBack = () => {
     setCurrentQuestionId((prev) => prev - 1);
   };
-  const goNext = () => {
+  const goNext = async () => {
     if (currentQuestionId === QUESTIONS.length - 1) {
-      // api 호출
+      const answersArr = Object.entries(answers).map(([key, value]) =>
+        isArray(value)
+          ? {
+              question_id: Number(key),
+              option_ids: value,
+            }
+          : {
+              question_id: Number(key),
+              option_ids: [value.toString()],
+            },
+      );
+      let essayAnswer: TAnswer = {};
+      const essayAnswerArr = Object.entries(answers).filter(
+        ([key]) => Number(key) === STEP_END_IDS[4],
+      );
+      if (essayAnswerArr.length > 0) {
+        essayAnswer = essayAnswerArr[0][1] as TAnswer;
+      }
+
+      await postSurveyLifestyle({
+        answers: answersArr.filter(
+          (answer) => answer.question_id <= STEP_END_IDS[0],
+        ),
+      });
+      await postSurveyIdentify({
+        answers: answersArr.filter(
+          (answer) =>
+            answer.question_id > STEP_END_IDS[0] &&
+            answer.question_id <= STEP_END_IDS[1],
+        ),
+      });
+      await postSurveyPreference({
+        answers: answersArr.filter(
+          (answer) =>
+            answer.question_id > STEP_END_IDS[1] &&
+            answer.question_id <= STEP_END_IDS[2],
+        ),
+      });
+      await postSurveyBeliefs({
+        answers: answersArr.filter(
+          (answer) =>
+            answer.question_id > STEP_END_IDS[2] &&
+            answer.question_id <= STEP_END_IDS[3],
+        ),
+      });
+      await postSurveyEssay({
+        answers: Object.entries(essayAnswer).map(([key, value]) => ({
+          sub_question_id: Number(key),
+          text: value.toString(),
+        })),
+      });
       onComplete();
     }
     setCurrentQuestionId((prev) => prev + 1);

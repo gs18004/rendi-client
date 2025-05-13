@@ -165,3 +165,78 @@ button:disabled {
 html {
   background: #fafafa;
 }
+
+/* src/index.css에 추가 */
+.markdown-content {
+  @apply text-base leading-relaxed;
+}
+
+.markdown-content h1 {
+  @apply mb-4 text-2xl font-bold;
+}
+
+.markdown-content h2 {
+  @apply mb-3 text-xl font-bold;
+}
+
+.markdown-content h3 {
+  @apply mb-2 text-lg font-bold;
+}
+
+.markdown-content p {
+  @apply mb-4;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply mb-4 ml-6;
+}
+
+.markdown-content ul {
+  @apply list-disc;
+}
+
+.markdown-content ol {
+  @apply list-decimal;
+}
+
+.markdown-content li {
+  @apply mb-2;
+}
+
+.markdown-content code {
+  @apply rounded bg-gray-100 px-1 py-0.5 font-mono text-sm;
+}
+
+.markdown-content pre {
+  @apply mb-4 overflow-x-auto rounded bg-gray-100 p-4;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-content blockquote {
+  @apply mb-4 border-l-4 border-gray-300 pl-4 italic;
+}
+
+.markdown-content a {
+  @apply text-blue-600 hover:underline;
+}
+
+.markdown-content table {
+  @apply mb-4 w-full border-collapse;
+}
+
+.markdown-content th,
+.markdown-content td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.markdown-content th {
+  @apply bg-gray-100 font-semibold;
+}
+
+.markdown-content img {
+  @apply mb-4 h-auto max-w-full rounded-lg;
+}

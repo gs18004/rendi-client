@@ -16,6 +16,8 @@ import type {
   TQuestion,
   TSubAnswerMap,
 } from '~/pages/CollectInfo/types/collectInfo';
+import { isArray } from 'es-toolkit/compat';
+import { usePostPartnersMutation } from '~/pages/CollectInfo/hooks/usePostPartnersMutation';
 
 type CollectPartnerInfoProps = {
   onComplete: () => void;
@@ -35,12 +37,27 @@ export default function CollectPartnerInfo({
   };
   const answer = answers[currentQuestion.id];
 
+  const answersArr = Object.entries(answers).map(([key, value]) =>
+    isArray(value)
+      ? {
+          question_id: Number(key),
+          option_ids: value,
+        }
+      : {
+          question_id: Number(key),
+          option_ids: [value.toString()],
+        },
+  );
+  const { mutateAsync: postPartners } = usePostPartnersMutation();
+
   const goBack = () => {
     setCurrentQuestionId((prev) => prev - 1);
   };
-  const goNext = () => {
+  const goNext = async () => {
     if (currentQuestionId === PARTNER_QUESTIONS.length - 1) {
-      // api 호출
+      await postPartners({
+        answers: answersArr,
+      });
       onComplete();
     }
     setCurrentQuestionId((prev) => prev + 1);

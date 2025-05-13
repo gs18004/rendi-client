@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Input from '~/components/common/Input';
+import { usePostScheduleMutation } from '~/pages/Root/hooks/usePostScheduleMutation';
+import { formatDateString } from '~/utils/date';
 
 type ModalProps = {
   onClose: () => void;
@@ -9,8 +11,13 @@ export default function Modal({ onClose }: ModalProps) {
   const [time, setTime] = useState('');
   const [place, setPlace] = useState('');
 
-  const handleSave = () => {
-    // api 호출
+  const { mutateAsync: postPartnersSchedule } = usePostScheduleMutation();
+  const handleSave = async () => {
+    await postPartnersSchedule({
+      meeting_date: formatDateString(date),
+      meeting_time: time + ':00.000Z',
+      meeting_place: place,
+    });
     onClose();
   };
   return (

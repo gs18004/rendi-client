@@ -69,7 +69,7 @@ export default function SignUp() {
   });
 
   const canMoveNext = answer[1] && answer[2] && answer[3] && answer[6];
-  const { mutate: postProfile } = usePostProfileMutation();
+  const { mutateAsync: postProfile } = usePostProfileMutation();
   const onComplete = async () => {
     if (canMoveNext) {
       await postProfile({

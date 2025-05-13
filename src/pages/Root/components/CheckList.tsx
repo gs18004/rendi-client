@@ -1,26 +1,30 @@
 import checkedImg from '~/assets/svg/checked.svg';
 import uncheckedImg from '~/assets/svg/unchecked.svg';
 import fileCheckImg from '~/assets/svg/file-check.svg';
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { checklistOptions } from '~/apis/checklistOptions';
+import { usePostChecklistMutation } from '~/pages/Root/hooks/usePostChecklistMutation';
+import { checklistItemsOptions } from '~/apis/checklistItemsOptions';
 
 export default function CheckList() {
   const notStarted = false;
-  const checkList = [
-    {
-      id: 1,
-      title: '약속 시간, 장소 다시 확인하기',
-      checked: true,
-    },
-    {
-      id: 2,
-      title: '헤어 / 피부 / 손톱 상태 점검하기',
-      checked: false,
-    },
-    {
-      id: 3,
-      title: '데일리룩 미리 코디해보기',
-      checked: false,
-    },
-  ];
+  const [{ data: checklistData }, { data: checklistItemsData }] =
+    useSuspenseQueries({
+      queries: [checklistOptions(), checklistItemsOptions()],
+    });
+  const { mutateAsync: postChecklist } = usePostChecklistMutation();
+  const handleCheck = async (id: number, checked: boolean) => {
+    await postChecklist({
+      checked: !checked,
+      item_id: id,
+    });
+  };
+  const checklist = checklistData.map((item) => ({
+    ...item,
+    text: checklistItemsData.find(
+      (checklistItem) => checklistItem.id === item.item_id,
+    )?.text,
+  }));
   return (
     <div className="bg-White flex w-full flex-col rounded-xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)]">
       <div className="flex w-full items-center gap-2 px-5 py-3.5">
@@ -42,15 +46,15 @@ export default function CheckList() {
             </p>
           </div>
         ) : (
-          checkList.map((item) => (
-            <div key={item.id} className="flex items-center gap-2.5">
-              <button>
+          checklist.map((item) => (
+            <div key={item.item_id} className="flex items-center gap-2.5">
+              <button onClick={() => handleCheck(item.item_id, item.checked)}>
                 <img
                   src={item.checked ? checkedImg : uncheckedImg}
                   alt="check"
                 />
               </button>
-              <p className="text-xs font-medium text-black">{item.title}</p>
+              <p className="text-xs font-medium text-black">{item.text}</p>
             </div>
           ))
         )}
