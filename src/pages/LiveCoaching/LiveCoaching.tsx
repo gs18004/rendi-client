@@ -108,7 +108,6 @@ export default function LiveCoaching() {
           />
         </button>
       </div>
-      <div className="absolute bottom-6 h-[4.5px] w-[150px] rounded-full bg-white" />
       <div className="absolute bottom-[118px] flex w-full flex-col gap-[7px] px-4">
         <Alert
           title="새로운 대화 주제 추천 받기"
