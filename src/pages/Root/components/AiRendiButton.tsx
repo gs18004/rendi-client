@@ -1,7 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import heartImg from '~/assets/img/heart.png';
+import { PATH } from '~/constants/path';
 export default function AiRendiButton() {
+  const navigate = useNavigate();
   return (
-    <button className="relative h-[149px] w-full overflow-hidden rounded-xl bg-gradient-to-bl from-[#F3FFE9] to-[#A8FFE5] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)]">
+    <button
+      className="relative h-[149px] w-full overflow-hidden rounded-xl bg-gradient-to-bl from-[#F3FFE9] to-[#A8FFE5] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.05)]"
+      onClick={() => navigate(PATH.LIVE_COACHING)}>
       <div className="absolute bottom-5 left-5">
         <p className="text-[10px] font-light text-[#343953]">
           소개팅에서 뭐라고 말할지 고민된다면?
