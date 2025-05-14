@@ -40,7 +40,8 @@ export default function Review({ onClose }: ReviewProps) {
       </div>
       <button
         className="flex w-[342px] items-center justify-center rounded-xl bg-[#2BCC9C] py-[18px] text-base font-semibold text-white/85"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           navigate(PATH.ROOT);
         }}>
         홈 화면으로 이동
