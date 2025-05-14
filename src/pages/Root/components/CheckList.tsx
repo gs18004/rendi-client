@@ -36,7 +36,7 @@ export default function CheckList() {
         </p>
       </div>
       <div className="flex max-h-[300px] w-full flex-col gap-3 overflow-y-auto px-5 pb-3.5">
-        {!notStarted ? (
+        {notStarted ? (
           <div className="flex flex-col items-center gap-[15px] py-10">
             <img src={fileCheckImg} alt="file-check" />
             <p className="text-center text-sm font-semibold leading-tight text-[#2BCC9C]">
@@ -53,6 +53,7 @@ export default function CheckList() {
                   <img
                     src={item.checked ? checkedImg : uncheckedImg}
                     alt="check"
+                    className="h-[23px] w-[23px]"
                   />
                 </button>
                 <p className="text-xs font-medium text-black">{item.text}</p>
