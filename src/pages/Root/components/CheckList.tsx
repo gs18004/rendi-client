@@ -35,7 +35,7 @@ export default function CheckList() {
             : '두근두근 소개팅 전! 무엇을 챙겨볼까요?'}
         </p>
       </div>
-      <div className="flex w-full flex-col gap-3 px-5 pb-3.5">
+      <div className="flex max-h-[300px] w-full flex-col gap-3 overflow-y-auto px-5 pb-3.5">
         {notStarted ? (
           <div className="flex flex-col items-center gap-[15px] py-10">
             <img src={fileCheckImg} alt="file-check" />
@@ -46,17 +46,19 @@ export default function CheckList() {
             </p>
           </div>
         ) : (
-          checklist.map((item) => (
-            <div key={item.item_id} className="flex items-center gap-2.5">
-              <button onClick={() => handleCheck(item.item_id, item.checked)}>
-                <img
-                  src={item.checked ? checkedImg : uncheckedImg}
-                  alt="check"
-                />
-              </button>
-              <p className="text-xs font-medium text-black">{item.text}</p>
-            </div>
-          ))
+          <div className="flex flex-col gap-3">
+            {checklist.map((item) => (
+              <div key={item.item_id} className="flex items-center gap-2.5">
+                <button onClick={() => handleCheck(item.item_id, item.checked)}>
+                  <img
+                    src={item.checked ? checkedImg : uncheckedImg}
+                    alt="check"
+                  />
+                </button>
+                <p className="text-xs font-medium text-black">{item.text}</p>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
