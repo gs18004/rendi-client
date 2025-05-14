@@ -5,7 +5,7 @@ import Top from '~/pages/Root/components/Top';
 
 export default function Root() {
   return (
-    <div className="flex w-full flex-col items-center gap-6 px-4">
+    <div className="flex w-full flex-col items-center gap-6 px-4 pb-8">
       <Header />
       <Top />
       <div className="flex w-full flex-col items-center gap-6 px-4">
