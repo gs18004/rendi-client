@@ -28,7 +28,7 @@ export default function Top() {
       </p>
       <div
         className={clsx(
-          'flex w-full items-center rounded-xl bg-white px-[78px] py-[29px]',
+          'flex w-full items-center rounded-xl bg-white p-[29px]',
           {
             'flex-col': date === null,
             'gap-1': date === null,
