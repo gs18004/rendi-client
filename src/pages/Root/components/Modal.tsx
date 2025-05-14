@@ -78,7 +78,7 @@ export default function Modal({ onClose }: ModalProps) {
             취소
           </button>
           <button
-            className="w-full rounded-[10px] bg-[#343953] px-5 py-2.5 text-center text-xs font-semibold text-white"
+            className="w-full rounded-[10px] bg-[#343953] px-5 py-2.5 text-center text-xs font-semibold text-white disabled:opacity-50"
             onClick={handleSave}
             disabled={!isFormValid}>
             저장
