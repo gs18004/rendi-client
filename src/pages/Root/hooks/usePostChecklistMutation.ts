@@ -22,7 +22,7 @@ export function usePostChecklistMutation() {
 }
 
 async function postChecklist(params: Params) {
-  const { data } = await http.post<Response>(END_POINT.CHECKLIST, params);
+  const { data } = await http.post<Response>(END_POINT.CHECKLIST.ALL, params);
 
   return data;
 }

@@ -18,5 +18,8 @@ export const END_POINT = {
   PARTNERS: '/partners',
   DASHBOARD: '/dashboard',
   SCHEDULES: '/schedules',
-  CHECKLIST: '/checklist',
+  CHECKLIST: {
+    ALL: '/checklist',
+    ITEMS: '/checklist/items',
+  },
 };

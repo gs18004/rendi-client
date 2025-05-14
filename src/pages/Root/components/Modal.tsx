@@ -12,7 +12,12 @@ export default function Modal({ onClose }: ModalProps) {
   const [place, setPlace] = useState('');
 
   const { mutateAsync: postPartnersSchedule } = usePostScheduleMutation();
+  const isValidDate = /^\d{8}$/.test(date);
+  const isValidTime = /^([01]\d|2[0-3]):([0-5]\d)$/.test(time);
+  const isValidPlace = place.trim().length > 0;
+  const isFormValid = isValidDate && isValidTime && isValidPlace;
   const handleSave = async () => {
+    if (!isFormValid) return;
     await postPartnersSchedule({
       meeting_date: formatDateString(date),
       meeting_time: time + ':00.000Z',
@@ -70,7 +75,8 @@ export default function Modal({ onClose }: ModalProps) {
           </button>
           <button
             className="w-full rounded-[10px] bg-[#343953] px-5 py-2.5 text-center text-xs font-semibold text-white"
-            onClick={handleSave}>
+            onClick={handleSave}
+            disabled={!isFormValid}>
             저장
           </button>
         </div>

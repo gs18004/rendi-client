@@ -8,7 +8,7 @@ type Response =
   paths['/checklist']['get']['responses']['200']['content']['application/json'];
 
 async function getChecklist() {
-  const { data } = await http.get<Response>(END_POINT.CHECKLIST);
+  const { data } = await http.get<Response>(END_POINT.CHECKLIST.ALL);
 
   return data;
 }
