@@ -133,7 +133,7 @@ export default function LiveCoaching() {
           details={activeAlert === 1 ? details2 : undefined}
         />
       </div>
-      {showReview ? <Review /> : null}
+      {showReview ? <Review onClose={() => setShowReview(false)} /> : null}
     </div>
   );
 }

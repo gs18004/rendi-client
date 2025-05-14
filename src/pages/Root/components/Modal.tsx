@@ -26,8 +26,12 @@ export default function Modal({ onClose }: ModalProps) {
     onClose();
   };
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="flex w-full max-w-[342px] flex-col items-center gap-[26px] rounded-xl bg-[#FAFAFA] p-5">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      onClick={onClose}>
+      <div
+        className="flex w-full max-w-[342px] flex-col items-center gap-[26px] rounded-xl bg-[#FAFAFA] p-5"
+        onClick={(e) => e.stopPropagation()}>
         <p className="text-center text-base font-semibold leading-tight text-black">
           소개팅 일정 등록하기
           <br />
