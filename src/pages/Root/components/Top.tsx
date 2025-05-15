@@ -36,12 +36,13 @@ export default function Top() {
           },
         )}>
         <p className="text-4xl font-bold text-[#2BCC9C]">
-          D-
           {date === null
-            ? '?'
-            : calculateDday(date) === 0
-              ? 'Day'
-              : calculateDday(date)}
+            ? 'D-?'
+            : calculateDday(date) > 0
+              ? `D-${calculateDday(date)}`
+              : calculateDday(date) < 0
+                ? `D+${-calculateDday(date)}`
+                : 'D-Day'}
         </p>
         {date === null ? (
           <button
