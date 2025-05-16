@@ -206,7 +206,11 @@ export default function LiveCoaching() {
                 대화 비율
               </p>
               <p className="text-2xl font-bold leading-tight text-white">
-                7 : 3
+                {data?.scores?.user_talk_share === undefined
+                  ? '- : -'
+                  : `${data?.scores?.user_talk_share * 10} : ${
+                      10 - data?.scores?.user_talk_share * 10
+                    }`}
               </p>
               <div className="flex items-center gap-6">
                 <p className="text-[6px] font-medium text-white">나</p>
