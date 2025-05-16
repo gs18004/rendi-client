@@ -33,11 +33,7 @@ export default function Memo({ onClose, partnerMemory }: MemoProps) {
       <div className="mt-5 h-full w-full overflow-y-auto">
         <div className="flex w-full flex-col gap-2">
           {Object.entries(partnerMemory.content).map(([key, value]) => (
-            <Collapse
-              key={key}
-              title={key}
-              description={Array.isArray(value) ? value.join('\n') : ''}
-            />
+            <Collapse key={key} title={key} description={value} />
           ))}
         </div>
       </div>
