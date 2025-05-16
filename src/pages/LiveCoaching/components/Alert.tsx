@@ -41,7 +41,9 @@ export default function Alert({
         {details !== undefined ? (
           <div className="mt-2 flex w-full flex-col gap-1">
             {details.map((detail) => (
-              <div className="flex w-full flex-col gap-1 rounded-[10px] bg-white p-2.5">
+              <div
+                className="flex w-full flex-col gap-1 rounded-[10px] bg-white p-2.5"
+                key={detail.title}>
                 <p className="text-xs font-semibold leading-none text-black">
                   {detail.title}
                 </p>

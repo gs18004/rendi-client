@@ -1,10 +1,15 @@
 import zoomImg from '~/assets/img/zoom.png';
 import closeIcon from '~/assets/svg/close.svg';
-import { PATH } from '~/constants/path';
-import { useNavigate } from 'react-router-dom';
 import Collapse from '~/pages/ChatCoaching/components/Collapse';
-export default function Memo() {
-  const navigate = useNavigate();
+
+type MemoProps = {
+  onClose: () => void;
+  partnerMemory: {
+    content: Record<string, string[]>;
+  };
+};
+
+export default function Memo({ onClose, partnerMemory }: MemoProps) {
   return (
     <div className="flex max-h-[700px] w-full flex-col items-center gap-2 rounded-[20px] bg-white/60 p-3 backdrop-blur-3xl">
       <div className="flex w-full items-start justify-between">
@@ -21,15 +26,19 @@ export default function Memo() {
             </p>
           </div>
         </div>
-        <button onClick={() => navigate(PATH.LIVE_COACHING)}>
+        <button onClick={onClose}>
           <img src={closeIcon} alt="close" />
         </button>
       </div>
       <div className="mt-5 h-full w-full overflow-y-auto">
         <div className="flex w-full flex-col gap-2">
-          <Collapse title="직업 및 학업" description="- 개발자" />
-          <Collapse title="취미 활동" description="- 개발" />
-          <Collapse title="좋아하는 음식" description="- 치킨" />
+          {Object.entries(partnerMemory.content).map(([key, value]) => (
+            <Collapse
+              key={key}
+              title={key}
+              description={value.map((v) => `- ${v}`).join('\n')}
+            />
+          ))}
         </div>
       </div>
     </div>

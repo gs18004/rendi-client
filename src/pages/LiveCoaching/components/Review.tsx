@@ -3,9 +3,10 @@ import { PATH } from '~/constants/path';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 type ReviewProps = {
+  review: string;
   onClose: () => void;
 };
-export default function Review({ onClose }: ReviewProps) {
+export default function Review({ review, onClose }: ReviewProps) {
   const navigate = useNavigate();
   return (
     <div
@@ -22,20 +23,7 @@ export default function Review({ onClose }: ReviewProps) {
           </span>
         </p>
         <div className="markdown-content h-full w-full overflow-y-auto">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{`
-# 오늘의 만남
-
-## 소개팅 주제
-
-- 소개팅 주제
-
-| 주제 | 내용 |
-| --- | --- |
-| 소개팅 주제 | 소개팅 주제 |
-| 소개팅 주제 | 소개팅 주제 |
-| 소개팅 주제 | 소개팅 주제 |
-| 소개팅 주제 | 소개팅 주제 |
-          `}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{review}</ReactMarkdown>
         </div>
       </div>
       <button

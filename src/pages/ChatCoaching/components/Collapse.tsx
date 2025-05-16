@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import remarkGfm from 'remark-gfm';
-import ReactMarkdown from 'react-markdown';
-
 type CollapseProps = {
   title: string;
   description: string;
@@ -16,11 +13,7 @@ export default function Collapse({ title, description }: CollapseProps) {
         <p className="text-sm font-medium leading-none text-white">{title}</p>
       </div>
       {isOpen ? (
-        <div className="markdown-content p-4">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {description}
-          </ReactMarkdown>
-        </div>
+        <div className="whitespace-pre-line p-4">{description}</div>
       ) : null}
     </button>
   );
