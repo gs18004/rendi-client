@@ -19,7 +19,7 @@ export default function Review({ review, onClose }: ReviewProps) {
           소개팅이 마무리 되었어요!
           <br />
           <span className="text-[10px] font-light leading-tight text-black">
-            렌디가 오늘의 만남을 정리해봤어요.
+            상대방에 대해 중요한 내용을 정리해봤어요.
           </span>
         </p>
         <div className="markdown-content h-full w-full overflow-y-auto">
