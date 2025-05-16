@@ -166,7 +166,7 @@ export default function LiveCoaching() {
                 <div
                   className="h-full bg-gradient-to-r from-[#FFF2A4] to-[#2BCC9C]"
                   style={{
-                    width: `${data?.scores?.partner_engagement * 25}%`,
+                    width: `${(data?.scores?.partner_engagement ?? 0) * 25}%`,
                   }}
                 />
               </div>
@@ -179,7 +179,7 @@ export default function LiveCoaching() {
                 <div
                   className="h-full bg-gradient-to-r from-[#FFF2A4] to-[#FF8686]"
                   style={{
-                    width: `${data?.scores?.user_engagement * 25}%`,
+                    width: `${(data?.scores?.user_engagement ?? 0) * 25}%`,
                   }}
                 />
               </div>
