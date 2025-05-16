@@ -1,7 +1,7 @@
 import { useState } from 'react';
 type CollapseProps = {
   title: string;
-  description: string;
+  description: string[];
 };
 export default function Collapse({ title, description }: CollapseProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +13,13 @@ export default function Collapse({ title, description }: CollapseProps) {
         <p className="text-sm font-medium leading-none text-white">{title}</p>
       </div>
       {isOpen ? (
-        <div className="whitespace-pre-line p-4">{description}</div>
+        <div className="whitespace-pre-line p-4">
+          {description.map((d) => (
+            <p key={d} className="text-sm font-normal leading-none text-black">
+              - {d}
+            </p>
+          ))}
+        </div>
       ) : null}
     </button>
   );
