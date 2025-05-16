@@ -7,6 +7,7 @@ import chatImg from '~/assets/img/chat.png';
 import { useState, useEffect, useRef } from 'react';
 import Review from '~/pages/LiveCoaching/components/Review';
 import ChatCoaching from '~/pages/ChatCoaching/ChatCoaching';
+import { LiveCoachingData } from '~/pages/LiveCoaching/LiveCoachingData';
 
 const WS_URL = 'wss://api.rendi.online/ws/speech';
 const SAMPLE_RATE = 16000;
@@ -20,8 +21,7 @@ export default function LiveCoaching() {
   const [showReview, setShowReview] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<string>('');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<LiveCoachingData | null>(null);
 
   const wsRef = useRef<WebSocket | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -161,7 +161,7 @@ export default function LiveCoaching() {
       {showChatCoaching ? (
         <ChatCoaching
           onClose={() => setShowChatCoaching(false)}
-          partnerMemory={data?.partner_memory ?? { content: {} }}
+          partnerMemory={{ content: data?.partner_memory ?? {} }}
         />
       ) : (
         <div className="relative flex h-dvh w-full flex-col items-center">
@@ -183,7 +183,7 @@ export default function LiveCoaching() {
                 <div
                   className="h-full bg-gradient-to-r from-[#FFF2A4] to-[#2BCC9C]"
                   style={{
-                    width: `${(data?.scores?.partner_engagement ?? 0) * 25}%`,
+                    width: `${(data?.scores.partner_engagement ?? 0) * 25}%`,
                   }}
                 />
               </div>
@@ -196,7 +196,7 @@ export default function LiveCoaching() {
                 <div
                   className="h-full bg-gradient-to-r from-[#FFF2A4] to-[#FF8686]"
                   style={{
-                    width: `${(data?.scores?.user_engagement ?? 0) * 25}%`,
+                    width: `${(data?.scores.user_engagement ?? 0) * 25}%`,
                   }}
                 />
               </div>
@@ -206,10 +206,10 @@ export default function LiveCoaching() {
                 대화 비율
               </p>
               <p className="text-2xl font-bold leading-tight text-white">
-                {data?.scores?.user_talk_share === undefined
+                {data?.scores.user_talk_share === undefined
                   ? '- : -'
-                  : `${Math.round(data?.scores?.user_talk_share * 10)} : ${
-                      10 - Math.round(data?.scores?.user_talk_share * 10)
+                  : `${Math.round(data?.scores.user_talk_share * 10)} : ${
+                      10 - Math.round(data?.scores.user_talk_share * 10)
                     }`}
               </p>
               <div className="flex items-center gap-6">
@@ -250,26 +250,25 @@ export default function LiveCoaching() {
             </button>
           </div>
           <div className="absolute bottom-[118px] flex w-full flex-col gap-[7px] px-4">
-            {data?.advice_metadatas?.map(
-              (metadata: {
-                advice_id: string;
-                emoji: string;
-                title: string;
-                description: string;
-              }) => (
-                <Alert
-                  key={metadata.advice_id}
-                  title={metadata.emoji + ' ' + metadata.title}
-                  description={metadata.description}
-                  image={chatImg}
-                  onClick={() => toggleAlert(metadata.advice_id)}
-                  disabled={
-                    activeAlert !== metadata.advice_id && activeAlert !== null
-                  }
-                  details={activeAlert === metadata.advice_id ? [] : undefined}
-                />
-              ),
-            )}
+            {data?.advice_metadatas.map((metadata) => (
+              <Alert
+                key={metadata.advice_id}
+                title={metadata.emoji + ' ' + metadata.title}
+                description={metadata.description}
+                image={chatImg}
+                onClick={() => toggleAlert(metadata.advice_id)}
+                disabled={
+                  activeAlert !== metadata.advice_id && activeAlert !== null
+                }
+                details={
+                  activeAlert === metadata.advice_id
+                    ? data?.advice_details.find(
+                        (detail) => detail.advice_id === metadata.advice_id,
+                      )?.advice.content
+                    : undefined
+                }
+              />
+            ))}
           </div>
           {showReview ? (
             <Review
