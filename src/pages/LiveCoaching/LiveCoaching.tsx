@@ -41,7 +41,6 @@ export default function LiveCoaching() {
 
       wsRef.current.onmessage = (ev) => {
         const msg = JSON.parse(ev.data);
-        console.log('Received message:', msg);
         setData(msg);
       };
 
@@ -119,11 +118,28 @@ export default function LiveCoaching() {
   };
 
   const stopRecording = () => {
-    workletNodeRef.current?.disconnect();
-    audioCtxRef.current?.close();
-    streamRef.current?.getTracks().forEach((t) => t.stop());
-    wsRef.current?.close();
+    if (workletNodeRef.current) {
+      workletNodeRef.current.disconnect();
+      workletNodeRef.current = null;
+    }
+
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((t) => t.stop());
+      streamRef.current = null;
+    }
+
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+
+    if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+      audioCtxRef.current.close();
+      audioCtxRef.current = null;
+    }
+
     setIsRecording(false);
+    setConnectionStatus('🚫 Disconnected');
   };
 
   useEffect(() => {
