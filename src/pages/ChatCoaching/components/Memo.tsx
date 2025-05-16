@@ -36,7 +36,7 @@ export default function Memo({ onClose, partnerMemory }: MemoProps) {
             <Collapse
               key={key}
               title={key}
-              description={value.map((v) => `- ${v}`).join('\n')}
+              description={value?.map((v) => `- ${v}`).join('\n')}
             />
           ))}
         </div>
