@@ -161,7 +161,7 @@ export default function LiveCoaching() {
       {showChatCoaching ? (
         <ChatCoaching
           onClose={() => setShowChatCoaching(false)}
-          partnerMemory={{ content: data?.partner_memory ?? {} }}
+          partnerMemory={{ content: data?.partner_memory.content ?? {} }}
         />
       ) : (
         <div className="relative flex h-dvh w-full flex-col items-center">

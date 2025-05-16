@@ -4,7 +4,9 @@ export interface LiveCoachingData {
     partner_engagement: number;
     user_talk_share: number;
   };
-  partner_memory: Record<string, string[]>;
+  partner_memory: {
+    content: Record<string, string[]>;
+  };
   analysis: {
     user_engagement: number;
     partner_engagement: number;
