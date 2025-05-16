@@ -208,8 +208,8 @@ export default function LiveCoaching() {
               <p className="text-2xl font-bold leading-tight text-white">
                 {data?.scores?.user_talk_share === undefined
                   ? '- : -'
-                  : `${data?.scores?.user_talk_share * 10} : ${
-                      10 - data?.scores?.user_talk_share * 10
+                  : `${Math.round(data?.scores?.user_talk_share * 10)} : ${
+                      10 - Math.round(data?.scores?.user_talk_share * 10)
                     }`}
               </p>
               <div className="flex items-center gap-6">
