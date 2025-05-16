@@ -41,6 +41,7 @@ export default function LiveCoaching() {
 
       wsRef.current.onmessage = (ev) => {
         const msg = JSON.parse(ev.data);
+        console.log('Received message:', msg);
         setData(msg);
       };
 
