@@ -10,7 +10,6 @@ type MemoProps = {
 };
 
 export default function Memo({ onClose, partnerMemory }: MemoProps) {
-  console.log(partnerMemory);
   return (
     <div className="flex max-h-[700px] w-full flex-col items-center gap-2 rounded-[20px] bg-white/60 p-3 backdrop-blur-3xl">
       <div className="flex w-full items-start justify-between">
